@@ -22,6 +22,7 @@ class App extends Component {
 
     handleSubmit(e) {
       e.preventDefault();
+      if (!this.state.newTodoDescription) { return }
       const newTodo = { description: this.state.newTodoDescription, isCompleted: false };
       this.setState({ todos: [...this.state.todos, newTodo], newTodoDescription: '' });
     }
@@ -30,6 +31,12 @@ class App extends Component {
     const todo = todos[index];
     todo.isCompleted = todo.isCompleted ? false : true;
     this.setState({ todos: todos });
+  }
+  deleteTodo(index) {
+    const todos = this.state.todos.filter((todo, todoIndex) => {
+      return todoIndex !== index
+    })
+    this.setState({ todos })
   }
 
   render() {
@@ -45,8 +52,21 @@ class App extends Component {
             <input type="text" value={ this.state.newTodoDescription } onChange={ (e) => this.handleChange(e) } />
             <input type="submit" />
             </form>
+            <Todo todos={this.state.todos} deleteTodo={this.deleteTodo} />
       </div>
     );
+  }
+}
+
+class Todo extends Component {
+  render() {
+    return(
+      <ul>
+      { this.props.todos.map((todo, index) => {
+        return <li onClick={(e) => { this.props.deleteTodo(index)}} key={todo}>{ todo }</li>
+      })}
+      </ul>
+    ); 
   }
 }
 
