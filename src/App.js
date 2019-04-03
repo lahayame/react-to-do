@@ -52,7 +52,7 @@ class App extends Component {
             <input type="text" value={ this.state.newTodoDescription } onChange={ (e) => this.handleChange(e) } />
             <input type="submit" />
             </form>
-            <Todo todos={this.state.todos} deleteTodo={this.deleteTodo} />
+            <ToDo todos={this.state.todos} deleteTodo={this.deleteTodo} />
       </div>
     );
   }
